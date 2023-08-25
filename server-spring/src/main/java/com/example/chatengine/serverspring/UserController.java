@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +23,8 @@ import com.google.gson.reflect.TypeToken;
 
 @RestController
 public class UserController {
-    private static String CHAT_ENGINE_PROJECT_ID = "5d498a31-cd23-42b7-b367-4fcc9463bd2f";
-    private static String CHAT_ENGINE_PRIVATE_KEY = "49a46286-91c3-4f9c-92bf-284ae51b7628";
+    private static String CHAT_ENGINE_PROJECT_ID = "6b612b69-f611-4904-b177-69c6d6e9376f";
+    private static String CHAT_ENGINE_PRIVATE_KEY = "2409f474-631d-43cf-b30c-8a384d8a48c9";
 
     @CrossOrigin
     @RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -43,7 +44,7 @@ public class UserController {
             // Generate response String
             StringBuilder responseStr = new StringBuilder();
             try (BufferedReader br = new BufferedReader(
-                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                    new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                 String responseLine = null;
                 while ((responseLine = br.readLine()) != null) {
                     responseStr.append(responseLine.trim());
@@ -87,13 +88,13 @@ public class UserController {
             body.put("last_name", request.get("last_name"));
             String jsonInputString = new JSONObject(body).toString();
             try (OutputStream os = con.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
             // Generate response String
             StringBuilder responseStr = new StringBuilder();
             try (BufferedReader br = new BufferedReader(
-                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                    new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                 String responseLine = null;
                 while ((responseLine = br.readLine()) != null) {
                     responseStr.append(responseLine.trim());
